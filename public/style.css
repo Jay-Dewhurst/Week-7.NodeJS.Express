@@ -1,0 +1,305 @@
+:root {
+    --bg-bolor: #03030c;
+    --neon-blue: #00f0ff;
+    --neon-purple: #7000ff;
+    --panel-bg: rgba(10, 10, 25, 0.75);
+    --border-glow: rgba(0, 240, 255, 0.3);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-bolor);
+    color: #e0e0ff;
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+#lightning-canvas {
+    position:fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 999;
+}
+
+/* Task & Note List Code */
+ul li {
+    margin: 15px 0px 10px;
+    padding: 12px 50px 12px 45px;
+    cursor: pointer;
+    position: relative;
+    list-style-type: none;
+    border: 2px solid var(--border-glow);
+    border-radius: 15px;
+    background: var(--bg-bolor);
+    font-size: 16px;
+    transition: 0.2s;
+    user-select: none;
+}
+
+/* Set all odd List items to a different colour */
+ul li:nth-child(odd) {
+    background: var(--border-glow);
+}
+
+ul li:hover {
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 8px rgba(0, 240, 255, 0.2);
+}
+
+/* Crossed State Styling */
+ul li.checked {
+    background: #222233;
+    color: #8888a0;
+    border-color: rgba(0, 240, 255, 0.1);
+}
+
+ul li.checked .editable-text {
+    text-decoration: line-through;
+}
+
+/* Check off Items */
+ul li::before {
+    content: "";
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+    border: 2px solid var(--neon-blue);
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+ul li.checked::before {
+    background: var(--neon-blue);
+    box-shadow: 0px 0px 8px var(--neon-blue);
+}
+
+/* Two Column Infastructure */
+.dashboard-grid {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    width: 100%;
+}
+
+.column-panel {
+    flex: 1;
+    min-width: 0;
+    justify-content: flex-start !important;
+}
+
+/* Close Button */
+.close {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: 0.2s, color 0.2s;
+}
+
+.close:hover {
+    background-color: #f44336;
+    color: white;
+}
+
+.Task-header {
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+/* Input container */
+.input-group {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+input[type=text] {
+    flex: 1;
+    border: 2px solid var(--border-glow);
+    background-color: var(--bg-bolor);
+    color: #e0e0ff;
+    border-radius: 15px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* Remove if needed to respect container */
+#myDescInput {
+    flex: 3;
+}
+
+input[type=text]:focus {
+    border: 2px solid rgba(0, 240, 255, 0.5);
+    background-color: rgba(0, 240, 255, 0.05);
+    outline: none;
+}
+
+/* Add Note Button */
+.addBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+    padding: 0px 20px;
+    background: var(--bg-bolor);
+    color: var(--neon-blue);
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 2px solid var(--border-glow);
+    border-radius: 15px;
+}
+
+.addBtn:hover {
+    background-color: var(--neon-blue);
+    color: var(--bg-bolor);
+}
+
+/* Editable Content */
+/* Editable Fields */
+.editable-text {
+    display: inline-block;
+    width: 100%;
+    outline: none;
+    cursor: text;
+}
+
+.editable-text:focus {
+    background: rgba(0, 240, 255, 0.1);
+    border-radius: 4px;
+}
+
+/* Tells user the content can be edited */
+[contenteditable="true"] {
+    cursor: text;
+    padding: 2px 6px;
+    border-radius: 4px;
+    transition: background 0.2s, box-shadow 0.2s;
+    display: inline-block;
+}
+
+/* Hover effect to show editing is possible */
+[contenteditable="true"]:hover {
+    background: rgba(0, 240, 255, 0.1);
+}
+
+[contenteditable="true"]:focus {
+    outline: none;
+    background: rgba(0, 240, 255, 0.15);
+    border-radius: 4px;
+    box-shadow: 0px 0px 5px var(--neon-blue);
+}
+
+.note-desc {
+    color: #b0b0d0;
+}
+
+/* Nav Code */
+.nav-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 20px 20px 0px 20px;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.themed-panel {
+    background: var(--panel-bg);
+    border-radius: 16px;
+    border: 2px solid rgba(0, 240, 255, 0.2);
+    backdrop-filter: blur(12px);
+    box-shadow: 0px 0px 15px var(--border-glow);
+    position: relative;
+    overflow: hidden;
+}
+
+.navbar {
+    display: flex;
+    gap: 30px;
+    padding: 15px 35px;
+}
+
+.navbar a {
+    color: #a0a0ff;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+.navbar a:hover {
+    color: var(--neon-blue);
+    text-shadow: 0px 0px 8px var(--neon-blue);
+}
+
+/* Container & Boxes */
+.main-container {
+    max-width: 1200px;
+    margin: 120px auto 40px auto;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.content-row {
+    display: flex;
+    gap: 30px;
+    width: 100%;
+}
+
+.flex-box {
+    flex: 1;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.flex-box h2 {
+    color: var(--neon-blue);
+    margin-bottom: 15px;
+    font-size: 1.5rem;
+    letter-spacing: 0.5px;
+    text-shadow: 0px 0px 5px rgba(0, 240, 255, 0.5);
+}
+
+.flex-box p {
+    line-height: 1.6;
+    color: #b0b0d0;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .content-row {
+        flex-direction: column;
+    }
+    .navbar {
+        gap: 15px;
+        padding: 12px 20px;
+    }
+}

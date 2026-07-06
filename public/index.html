@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neo-Tech Interface</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+<main>
+    <canvas id="lightning-canvas"></canvas>
+    <section>
+        <div class="nav-wrapper">
+            <nav class="navbar themed-panel">
+                <a href="#home">Athena Systems</a>
+                <a href="#home">Call Us</a>
+                <a href="#home">Email Us</a>
+            </nav>
+        </div>
+    </section>
+    <section class="main-container">
+        <div class="content-row">
+            <div class="flex-box themed-panel" id="core">
+                <h2>Quantum Core Overdrive</h2>
+                    <p>Deploying sub-atomic processing clusters to stabilize neural grid matrices. Systems remain nominal under simulated reality constraints.</p>
+            </div>
+        </div>
+        <!-- Task-List & Note-taker Section -->
+        <!-- Side by Side Data Columns -->
+        <div class="content-row dashboard-grid">
+            <!-- Left Column: Tasks -->
+            <div class="flex-box themed-panel column-panel">
+                <h2 class="Task-header">Task Matrix</h2>
+                <div class="input-group">
+                    <input type="text" id="taskInput" placeholder="Initialize task process...">
+                    <span onclick="newTask()" class="addBtn">Add</span>
+                </div>
+                <ul id="taskUL">
+                </ul>
+            </div>
+            <!-- Right Column: Notes -->
+            <div class="flex-box themed-panel column-panel">
+                <h2 class="Task-header">Data Notes Vault</h2>
+                <div class="input-group">
+                    <input type="text" id="noteInput" placeholder="Secure note payload...">
+                    <span onclick="newNote()" class="addBtn">Save</span>
+                </div>
+                <ul id="noteUL">
+                </ul>
+            </div>
+        </div>
+        </div>
+        <div class="content-row">
+            <div class="flex-box themed-panel" id="systems">
+                <h2>Terminal Operations</h2>
+                    <p>Awaiting central command validation sequences. Perimeter mainframe shielding operating at maximum threshold output.</p>
+            </div>
+        </div>
+    </section>
+</main>
+    <script src="script.js"></script>
+</body>
+</html>
