@@ -35,7 +35,7 @@ const writeData = (data) => {
 
 // Handle GET request at the root
 app.get("/", (req, res) => {
-    res.send("Welcome to the Tasklist & Notetaking Application!");
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
 // Handle GET request to retrieve stored data
