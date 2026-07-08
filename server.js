@@ -59,7 +59,7 @@ app.post("/echo", (req, res) => {
 });
 
 // Wildcards to handle undefined routes
-app.all("*", (req, res) => {
+app.all(/.*/, (req, res) => {
     res.status(404).send("Route not found");
 });
 

@@ -1,2 +1,5 @@
 #Ignore following content
+/error_images
 /node_modules
+readme.md
+rubrics.md
