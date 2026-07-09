@@ -25,7 +25,12 @@ const readData = () => {
     if (!fs.existsSync(dataFilePath)) {
         return [];
     }
-    const data = fs.readFileSync(dataFilePath);
+    const data = fs.readFileSync(dataFilePath, "utf8");
+
+    if (data.trim() === "") {
+        return [];
+    }
+    
     return JSON.parse(data);
 };
 
