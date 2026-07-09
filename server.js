@@ -30,7 +30,7 @@ const readData = () => {
     if (data.trim() === "") {
         return [];
     }
-    
+
     return JSON.parse(data);
 };
 
@@ -91,7 +91,7 @@ app.get("/data/:id", asyncHandler((req, res) => {
 
 // CRUD - Update/PUT (PARENT)
 // Handle PUT request to update notes by ID (CHILD)
-app.put("data/:id", asyncHandler((req, res) => {
+app.put("/data/:id", asyncHandler((req, res) => {
     const currentData = readData();
     const index = currentData.findIndex((item) => item.id === req.params.id);
 
