@@ -99,8 +99,8 @@ app.put("/data/:id", asyncHandler((req, res) => {
         return res.status(404).json({ message: "Note not found" });
     }
 
-    const updateNote = { ...currentData[index], ...req.body, id: currentData[index].id };
-    currentData[index] = updateNote;
+    const updatedNote = { ...currentData[index], ...req.body, id: currentData[index].id };
+    currentData[index] = updatedNote;
     writeData(currentData);
 
     res.status(200).json({ message: "Note updated succesfully", data: updatedNote });
