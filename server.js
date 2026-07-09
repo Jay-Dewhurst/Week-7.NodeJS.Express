@@ -19,7 +19,8 @@ app.use(express.static(path.join(__dirname, "public")));
 // Define the path to the JSON file
 const dataFilePath = path.join(__dirname, "data.json");
 
-// Read data from the JSON file
+// CRUD Operations (PARENT)
+// Read and Write functions for the JSON file (CHILD)
 const readData = () => {
     if (!fs.existsSync(dataFilePath)) {
         return [];
@@ -28,23 +29,24 @@ const readData = () => {
     return JSON.parse(data);
 };
 
-// Write data to the JSON file
 const writeData = (data) => {
     fs.writeFileSync(dataFilePath, JSON.stringify(data, null, 2));
 };
 
-// Handle GET request at the root
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
-});
+// CRUD Modular (DRY) helper Function
+const asyncHandler = (routeFunction) => {
+    return (req, res) => {
+        try {
+            routeFunction(req, res);
+        } catch (error) {
+            console.error("Route error:", error);
+            res.status(500).json({ message: "Internal server error" });
+        }
+    };
+};
 
-// Handle GET request to retrieve stored data
-app.get("/data", (req, res) => {
-    const data = readData();
-    res.json(data);
-});
-
-// Handle POST request to save new data with a unique ID
+// CRUD - Create/POST (PARENT)
+// Handle POST request to save new data with a unique ID (CHILD)
 app.post("/data", (req, res) => {
     const newData = { id: uuidv4(), ...req.body };
     const currentData = readData();
@@ -53,10 +55,65 @@ app.post("/data", (req, res) => {
     res.json({ message: "Data saved successfully", data: newData });
 });
 
-// Handle POST request at the /echo route
+// Handle POST request at the /echo route (CHILD)
 app.post("/echo", (req, res) => {
     res.json({ received: req.body });
 });
+
+// CRUD - Read/GET (PARENT)
+// Handle GET request at the root (CHILD)
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+// Handle GET request to retrieve stored data (CHILD)
+app.get("/data", (req, res) => {
+    const data = readData();
+    res.json(data);
+});
+
+// Handle GET request to retrieve stored data by ID (CHILD)
+app.get("/data/:id", asyncHandler((req, res) => {
+    const currentData = readData();
+    const note = currentData.find((item) => item.id === req.params.id);
+
+    if (!note) {
+        return res.status(404).json({ message: "Note not found" });
+        }
+    
+    res.status(200).json(note);
+}));
+
+// CRUD - Update/PUT (PARENT)
+// Handle PUT request to update notes by ID (CHILD)
+app.put("data/:id", asyncHandler((req, res) => {
+    const currentData = readData();
+    const index = currentData.findIndex((item) => item.id === req.params.id);
+
+    if (index === -1) {
+        return res.status(404).json({ message: "Note not found" });
+    }
+
+    const updateNote = { ...currentData[index], ...req.body, id: currentData[index].id };
+    currentData[index] = updateNote;
+    writeData(currentData);
+
+    res.status(200).json({ message: "Note updated succesfully", data: updatedNote });
+}));
+
+// CRUD Delete/DELETE (PARENT)
+// Handle DELETE request to delete notes by ID
+app.delete("/data/:id", asyncHandler((req, res) => {
+    const currentData = readData();
+    const fileteredData = currentData.filter((item) => item.id !== req.params.id);
+
+    if (filteredData.length === currentData.length) {
+        return res.status(404).json({ message: "Note not found" });
+    }
+
+    writeData(filteredData);
+    res.status(200).json({ message: "Note deleted succesfully" });
+}));
 
 // Wildcards to handle undefined routes
 app.all(/.*/, (req, res) => {
