@@ -110,7 +110,7 @@ app.put("/data/:id", asyncHandler((req, res) => {
 // Handle DELETE request to delete notes by ID
 app.delete("/data/:id", asyncHandler((req, res) => {
     const currentData = readData();
-    const fileteredData = currentData.filter((item) => item.id !== req.params.id);
+    const filteredData = currentData.filter((item) => item.id !== req.params.id);
 
     if (filteredData.length === currentData.length) {
         return res.status(404).json({ message: "Note not found" });
