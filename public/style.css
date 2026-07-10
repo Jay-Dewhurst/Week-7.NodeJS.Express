@@ -225,16 +225,6 @@ input[type=text]:focus {
     z-index: 100;
 }
 
-.themed-panel {
-    background: var(--panel-bg);
-    border-radius: 16px;
-    border: 2px solid rgba(0, 240, 255, 0.2);
-    backdrop-filter: blur(12px);
-    box-shadow: 0px 0px 15px var(--border-glow);
-    position: relative;
-    overflow: hidden;
-}
-
 .navbar {
     display: flex;
     gap: 30px;
@@ -272,12 +262,31 @@ input[type=text]:focus {
     width: 100%;
 }
 
+/* Overrides both .flex-box and .themed-panel padding, only for this element */
+#core {
+    padding: 50px 50px 30px 50px;
+}
+
+#systems {
+    text-align: center;
+}
+
 .flex-box {
     flex: 1;
-    padding: 40px;
+    padding: 30px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 20px;
+}
+
+.flex-box h1 {
+    color: var(--neon-blue);
+    margin-bottom: 15px;
+    font-size: 50px;
+    letter-spacing: 0.5px;
+    text-shadow: 0px 0px 5px rgba(0, 240, 255, 0.5);
+    text-align: center;
 }
 
 .flex-box h2 {
@@ -291,6 +300,16 @@ input[type=text]:focus {
 .flex-box p {
     line-height: 1.6;
     color: #b0b0d0;
+}
+
+.themed-panel {
+    background: var(--panel-bg);
+    border-radius: 16px;
+    border: 2px solid rgba(0, 240, 255, 0.2);
+    backdrop-filter: blur(12px);
+    box-shadow: 0px 0px 15px var(--border-glow);
+    position: relative;
+    overflow: hidden;
 }
 
 /* Media Queries */
