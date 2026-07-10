@@ -52,13 +52,13 @@ const asyncHandler = (routeFunction) => {
 
 // CRUD - Create/POST (PARENT)
 // Handle POST request to save new data with a unique ID (CHILD)
-app.post("/data", (req, res) => {
+app.post("/data", asyncHandler((req, res) => {
     const newData = { id: uuidv4(), ...req.body };
     const currentData = readData();
     currentData.push(newData);
     writeData(currentData);
     res.json({ message: "Data saved successfully", data: newData });
-});
+}));
 
 // Handle POST request at the /echo route (CHILD)
 app.post("/echo", (req, res) => {
@@ -72,10 +72,10 @@ app.get("/", (req, res) => {
 });
 
 // Handle GET request to retrieve stored data (CHILD)
-app.get("/data", (req, res) => {
+app.get("/data", asyncHandler((req, res) => {
     const data = readData();
     res.json(data);
-});
+}));
 
 // Handle GET request to retrieve stored data by ID (CHILD)
 app.get("/data/:id", asyncHandler((req, res) => {
